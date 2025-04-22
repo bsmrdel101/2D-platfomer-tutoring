@@ -15,27 +15,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Cache Unity packages
-        uses: actions/cache@v3
+      - name: Basic Setup
+        uses: game-ci/unity-test-runner@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          path: |
-            ~/.cache/unity3d
-            ~/.local/share/unity3d
-          key: Library-${{ runner.os }}-${{ hashFiles('**/Packages/manifest.json') }}
-
-      - name: Install Unity
-        uses: game-ci/unity-installer@v2
-        with:
-          unityVersion: 6000.0.46f1
-
-      - name: Run Unity Tests
-        uses: game-ci/unity-test-runner@v2
-        with:
-          testMode: playmode
-          unityVersion: 6000.0.46f1
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
-        with:
-          name: TestResults
-          path: TestResults
+          projectPath: path/to/your/project
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          
