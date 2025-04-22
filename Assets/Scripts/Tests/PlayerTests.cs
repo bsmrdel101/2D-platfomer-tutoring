@@ -7,7 +7,7 @@ using UnityEngine.TestTools;
 
 public class PlayerTests
 {
-    [SetUp]
+    [OneTimeSetUp]
     public void Setup()
     {
         SceneManager.LoadScene("Level 1");
@@ -17,5 +17,11 @@ public class PlayerTests
     public void Sum()
     {
         Assert.AreEqual(1 + 1, 2);
+    }
+    
+    [Test]
+    public void Sum2()
+    {
+        Assert.AreEqual(2 + 2, 4);
     }
 }
