@@ -1,0 +1,41 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Run Unity Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Cache Unity packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/unity3d
+            ~/.local/share/unity3d
+          key: Library-${{ runner.os }}-${{ hashFiles('**/Packages/manifest.json') }}
+
+      - name: Setup Unity
+        uses: game-ci/unity-actions/setup@v2
+        with:
+          unityVersion: 6000.0.46f1
+
+      - name: Run Unity PlayMode Tests
+        uses: game-ci/unity-actions/test@v2
+        with:
+          unityVersion: 6000.0.46f1
+          testMode: playmode
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: TestResults
+          path: TestResults

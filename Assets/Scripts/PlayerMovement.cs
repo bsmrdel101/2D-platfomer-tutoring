@@ -27,10 +27,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        velocity = rb.velocity;
+        velocity = rb.linearVelocity;
         HandleMovement();
         ApplyGravity();
-        rb.velocity = velocity;
+        rb.linearVelocity = velocity;
     }
 
     private void HandleMovement()
@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void HandleJump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
     }
 
     private bool IsGrounded()
